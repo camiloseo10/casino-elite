@@ -8,7 +8,7 @@ const team = [
     name: "Carlos Mendoza",
     role: "CEO & Founder",
     bio: "Former professional dealer with 20+ years in the industry. Founded CasinoElite with the vision of democratizing access to casino-quality equipment.",
-    image: "/placeholder.svg?height=300&width=300&text=Carlos+CEO",
+    image: "/carlos-mendoza.webp",
     specialties: ["Strategy", "Poker", "Leadership"],
     social: {
       linkedin: "#",
@@ -20,7 +20,7 @@ const team = [
     name: "Ana Rodriguez",
     role: "Product Director",
     bio: "Engineer specializing in materials. Oversees quality and development of all our products to ensure casino standards.",
-    image: "/placeholder.svg?height=300&width=300&text=Ana+Product",
+    image: "/ana-rodriguez.webp",
     specialties: ["Quality", "Innovation", "Materials"],
     social: {
       linkedin: "#",
@@ -32,7 +32,7 @@ const team = [
     name: "Miguel Torres",
     role: "Casino Expert",
     bio: "International casino consultant. Brings his experience in regulations and industry standards to our professional products.",
-    image: "/placeholder.svg?height=300&width=300&text=Miguel+Expert",
+    image: "/miguel-torres.webp",
     specialties: ["Regulations", "Blackjack", "Consulting"],
     social: {
       linkedin: "#",

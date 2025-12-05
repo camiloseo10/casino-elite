@@ -1,61 +1,102 @@
-// components/shop/ProductDetail.tsx
+"use client"
+
 import type { Product } from "@/types/product"
 import Image from "next/image"
-import { Star, ShoppingCart } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { ShoppingCart } from "lucide-react"
+import { useCartStore } from "@/stores/useCartStore"
+import { useState } from "react"
 
-export default function ProductDetail({ product }: { product: Product }) {
+type Props = {
+  product: Product
+}
+
+export default function ProductDetail({ product }: Props) {
+  const addItem = useCartStore((state) => state.addItem)
+  const toggleCart = useCartStore((state) => state.toggleCart)
+  const [quantity, setQuantity] = useState(1)
+
   const image = product.images.edges[0]?.node
-  const price = parseFloat(product.priceRange.minVariantPrice.amount)
-  const originalPrice = price * 1.25
-  const rating = 4.8
-  const reviews = 132
+  const variant = product.variants?.edges[0]?.node
+
+  const handleAddToCart = () => {
+    if (!variant) return
+
+    addItem({
+      id: variant.id,
+      title: product.title,
+      price: parseFloat(variant.price.amount),
+      image: image?.url,
+      quantity, // ✅ Se respeta la cantidad seleccionada
+    })
+
+    toggleCart() // ✅ Abre el Drawer del carrito
+  }
+
+  const handleDecrease = () => {
+    if (quantity > 1) setQuantity(quantity - 1)
+  }
+
+  const handleIncrease = () => {
+    setQuantity(quantity + 1)
+  }
 
   return (
-    <section className="py-12 bg-white dark:bg-slate-950">
-      <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
+    <section className="py-12">
+      <div className="container mx-auto px-4 flex flex-col md:flex-row gap-12">
         {image && (
           <Image
             src={image.url}
             alt={image.altText || product.title}
-            width={800}
-            height={800}
-            className="w-full h-auto rounded-lg object-cover shadow-md"
+            width={600}
+            height={600}
+            className="w-full md:w-1/2 object-cover rounded-lg"
           />
         )}
-        <div className="space-y-6">
-          <h1 className="text-4xl font-bold text-slate-800 dark:text-white">
+
+        <div className="md:w-1/2">
+          <h1 className="text-3xl font-bold text-slate-800 dark:text-white mb-4">
             {product.title}
           </h1>
 
-          <div className="flex items-center gap-3">
-            <div className="flex items-center">
-              {[...Array(5)].map((_, i) => (
-                <Star
-                  key={i}
-                  className={`h-5 w-5 ${i < Math.floor(rating) ? "text-amber-400 fill-current" : "text-slate-400"}`}
-                />
-              ))}
+          <div className="flex items-center gap-4 mb-4">
+            <span className="text-amber-600 text-2xl font-bold">
+              ${variant?.price.amount}
+            </span>
+            {variant?.compareAtPrice?.amount && (
+              <span className="line-through text-slate-500">
+                ${variant.compareAtPrice.amount}
+              </span>
+            )}
+          </div>
+
+          <p className="text-slate-600 dark:text-slate-300 mb-6">{product.description}</p>
+
+          <div className="flex items-center gap-4 mb-6">
+            <span className="text-slate-800 dark:text-slate-200 font-semibold">Quantity</span>
+            <div className="flex items-center border border-slate-400 rounded overflow-hidden">
+              <button
+                onClick={handleDecrease}
+                className="px-3 py-1 text-lg font-bold text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-700"
+              >
+                −
+              </button>
+              <span className="px-4 py-1 text-slate-900 dark:text-white">{quantity}</span>
+              <button
+                onClick={handleIncrease}
+                className="px-3 py-1 text-lg font-bold text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-700"
+              >
+                +
+              </button>
             </div>
-            <span className="text-slate-500">{rating} ({reviews} reviews)</span>
           </div>
 
-          <div className="flex items-center gap-4">
-            <span className="text-3xl font-bold text-amber-600">
-              ${price.toFixed(2)}
-            </span>
-            <span className="text-xl line-through text-slate-400">
-              ${originalPrice.toFixed(2)}
-            </span>
-          </div>
-
-          <p className="text-slate-700 dark:text-slate-300">
-            This is a premium quality casino product, ideal for professional and home use. Built with high-grade materials and expert craftsmanship.
-          </p>
-
-          <Button className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black font-semibold px-6 py-3 rounded-md shadow">
-            <ShoppingCart className="w-5 h-5 mr-2" /> Add to Cart
-          </Button>
+          <button
+            onClick={handleAddToCart}
+            className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-md font-semibold flex items-center gap-2 transition"
+          >
+            <ShoppingCart className="w-5 h-5" />
+            Add to Cart
+          </button>
         </div>
       </div>
     </section>

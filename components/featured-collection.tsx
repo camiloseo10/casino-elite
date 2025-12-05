@@ -86,7 +86,7 @@ export default function FeaturedCollection() {
           <div className="relative">
             <div className="relative z-10">
               <Image
-                src="/placeholder.svg?height=600&width=600&text=Poker+Professional+Collection"
+                src="/poker-professional-tournament-hero.webp"
                 alt="Poker Professional Collection"
                 width={600}
                 height={600}

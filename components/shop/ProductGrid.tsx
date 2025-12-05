@@ -1,8 +1,9 @@
-import { getProductsInCollection } from "@/lib/shopify"
-import ProductCard from "@/components/shop/ProductCard"
+import { getAllProductsFull } from "@/lib/shopify"
+import ProductCard from "./ProductCard"
+import type { Product } from "@/types/product"
 
 export default async function ProductGrid() {
-  const products = await getProductsInCollection()
+  const products: Product[] = await getAllProductsFull()
 
   return (
     <section className="py-12 bg-white dark:bg-slate-950">

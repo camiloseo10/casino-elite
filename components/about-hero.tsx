@@ -66,7 +66,7 @@ export default function AboutHero() {
           <div className="relative">
             <div className="relative z-10">
               <Image
-                src="/placeholder.svg?height=600&width=600&text=CasinoElite+Team"
+                src="/about-hero.webp"
                 alt="CasinoElite Team"
                 width={600}
                 height={600}

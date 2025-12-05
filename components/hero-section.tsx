@@ -65,7 +65,7 @@ export default function HeroSection() {
           <div className="relative">
             <div className="relative z-10">
               <Image
-                src="/placeholder.svg?height=600&width=600"
+                src="/hero-home-casino.webp"
                 alt="Premium Casino Equipment"
                 width={600}
                 height={600}
